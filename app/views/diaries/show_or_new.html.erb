@@ -1,0 +1,122 @@
+<% prev_day = @diary.date - 1.day %>
+<% next_day = @diary.date + 1.day %>
+
+<div class="mb-3">
+  <p><%= @diary.date.strftime('%Y-%m-%d') %></p>
+</div>
+
+<div class="btn-group mb-3" role="group">
+  <%= link_to t('diaries.show_or_new.button1'), diary_by_date_path(date: prev_day), class: 'btn btn-outline-secondary' %>
+  <%= link_to t('diaries.show_or_new.button2'), diary_by_date_path(date: next_day), class: 'btn btn-outline-secondary' %>
+</div>
+
+<% if @diary.persisted? %>
+  <div class="mb-3">
+    <h1><%= @diary.title %></h1>
+    <p><%= @diary.content %></p>
+    <% if @diary.feedback.present? %>
+      
+      <% begin %>
+        <% feedback_hash = JSON.parse(@diary.feedback) %>
+        
+        <% if feedback_hash["grammar_errors"].present? %>
+          <div>
+            <p><%= t('diaries.show_or_new.feedback1') %></p>
+            <ul>
+              <% if feedback_hash["grammar_errors"].is_a?(Array) %>
+                <% feedback_hash["grammar_errors"].each do |error| %>
+                  <li><%= error %></li>
+                <% end %>
+              <% else %>
+                <li><%= feedback_hash["grammar_errors"] %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <% if feedback_hash["sentence_structure"].present? %>
+          <div>
+            <p><%= t('diaries.show_or_new.feedback2') %></p>
+            <% if feedback_hash["sentence_structure"].is_a?(Array) && feedback_hash["sentence_structure"].length > 0 %>
+              <ul>
+                <% feedback_hash["sentence_structure"].each do |feedback| %>
+                  <li><%= feedback %></li>
+                <% end %>
+              </ul>
+            <% elsif feedback_hash["sentence_structure"].is_a?(String) %>
+              <p><%= feedback_hash["sentence_structure"] %></p>
+            <% else %>
+              <p>No feedback available.</p>
+            <% end %>
+          </div>
+        <% end %>
+
+        <% if feedback_hash["useful_phrases"].present? %>
+          <div>
+            <p><%= t('diaries.show_or_new.feedback3') %></p>
+            <ul>
+              <% if feedback_hash["useful_phrases"].is_a?(Array) %>
+                <% feedback_hash["useful_phrases"].each do |phrase| %>
+                  <li><%= phrase %></li>
+                <% end %>
+              <% else %>
+                <li><%= feedback_hash["useful_phrases"] %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      <% rescue JSON::ParserError, TypeError => e %>
+        <div>
+          <p><%= @diary.feedback %></p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="mb-3">
+    <%= link_to t('diaries.show_or_new.button5'), edit_diary_by_date_path(date: params[:date]), class: 'btn btn-primary' %>
+  </div>
+<% else %>
+  <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#myModal"><%= t('diaries.show_or_new.button3') %></button>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">diary questions</h5>
+          <button id="close" type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="randomQuestion">ここにランダムな質問が表示されます。</p>
+          <p id="translatedQuestion" style="display: none;">日本語の質問がここに表示されます</p>
+          <input type="text" id="answerInput" class="form-control"/>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="translateQuestion"><%= t('diaries.show_or_new.button6') %></button>
+          <button type="button" class="btn btn-primary" id="changeQuestion"><%= t('diaries.show_or_new.button7') %></button>
+          <button type="button" class="btn btn-primary" id="nextQuestion"><%= t('diaries.show_or_new.button8') %></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="diary-form" data-writing-assist-enabled="<%= @user.writing_assist_enabled %>">
+    <%= form_with(model: @diary, url: diaries_path, local: true, class: "needs-validation", novalidate: "") do |form| %>
+      <div class="mb-3">
+        <%= form.label :title, class: 'form-label' %>
+        <%= form.text_field :title, class: 'form-control' %>
+      </div>
+
+      <div class="mb-3">
+        <%= form.label :content, class: 'form-label' %>
+        <%= form.text_area :content, class: 'form-control', rows: 5 %>
+      </div>
+
+      <%= form.hidden_field :date, value: params[:date] %>
+
+      <%= form.submit t('diaries.show_or_new.button4'), class: "btn btn-success" %>
+    <% end %> 
+  </div>
+<% end %>

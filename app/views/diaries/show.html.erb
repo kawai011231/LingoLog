@@ -1,0 +1,11 @@
+<%= month_calendar class: 'calendar' do |date| %>
+  <% diary_exists = Diary.where(user_id: session[:user_id], date: date).exists? %>
+  <% is_today = date == Date.today %>
+  <div class="calendar-day <%= 'diary-exists' if diary_exists %> <%= 'today' if is_today %>">
+    <%= link_to date.strftime("%d"), diary_by_date_path(date: date.strftime("%Y-%m-%d")), class: 'btn btn-link no-underline text-black' %>
+  </div>
+<% end %>
+<div>
+  <p><%= t('diaries.show.text1') %></p>
+  <p><%= t('diaries.show.text2') %></p>
+</div>

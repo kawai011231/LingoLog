@@ -1,0 +1,11 @@
+@import "bootstrap";
+.no-underline {
+  text-decoration: none; /* アンダーバーを除去 */
+}
+.diary-exists {
+  background-color: #e7f4ff; /* 薄い青色 */
+}
+
+.today {
+  background-color: #d1e7dd; /* 薄い緑色 */
+}

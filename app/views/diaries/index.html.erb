@@ -1,0 +1,28 @@
+<%= form_with(url: diaries_index_path, method: :get, local: true) do |form| %>
+  <div class="form-group">
+    <%= form.label :user_id, t('diaries.index.text1') %>
+    <%= form.collection_select(:user_id, @users, :id, :username, include_blank: true) %>
+    <%= form.submit t('diaries.index.button1'), class: 'btn btn-primary' %>
+  </div>
+<% end %> 
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= t('diaries.index.colmun1') %></th>
+      <th><%= t('diaries.index.colmun2') %></th>
+      <th><%= t('diaries.index.colmun3') %></th>
+      <th><%= t('diaries.index.colmun4') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @diaries.each do |diary| %>
+      <tr>
+        <td><%= diary.user.username %></td>
+        <td><%= diary.date %></td>
+        <td><%= diary.title %></td>
+        <td><%= diary.content %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

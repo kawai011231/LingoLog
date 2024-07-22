@@ -1,0 +1,43 @@
+ja:
+  layout:
+    header:
+      h11: こんにちは
+      h12: ようこそ
+    dropdown:
+      button1: カレンダー
+      button2: 他の人の日記を見る
+      button3: 非公開アカウントへ変更
+      button4: 公開アカウントへ変更
+      button5: 英語へ変更
+      button6: 日本語へ変更
+      button7: ログアウト
+  diaries:
+    index:
+      text1: ユーザーで絞る
+      button1: 絞る
+      colmun1: ユーザー
+      colmun2: 作成日
+      colmun3: タイトル
+      colmun4: コンテンツ
+    show_or_new:
+      button1: 前日の日記を見る
+      button2: 次の日の日記を見る
+      button3: 対話で日記を作成
+      button4: 作成
+      button5: 編集
+      button6: 翻訳
+      button7: 他の質問
+      button8: 次へ
+      title: タイトル
+      content: コンテンツ
+      feedback1: 文法エラー
+      feedback2: 文の構造
+      feedback3: 便利なフレーズ
+    show:
+      text1: 🟦 は日記が作成された日です
+      text2: 🟩 は今日の日付です
+    edit:
+      button1: 戻る
+      button2: 更新
+  alert:
+    logout: ログアウトしました

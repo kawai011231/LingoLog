@@ -1,0 +1,43 @@
+en:
+  layout:
+    header:
+      h11: Hello
+      h12: Welcome to Our App
+    dropdown:
+      button1: Calendar
+      button2: someones diary
+      button3: Change to private account
+      button4: Change to public account
+      button5: Change to English
+      button6: Change to Japanese
+      button7: Logout
+  diaries:
+    index:
+      text1: Filter by User
+      button1: Filter
+      colmun1: User
+      colmun2: Date
+      colmun3: Title
+      colmun4: Content
+    show_or_new:
+      button1: Yesterday
+      button2: Tomorrow
+      button3: create a diary with dialogue
+      button4: create
+      button5: Edit
+      button6: translation
+      button7: another question
+      button8: next
+      title: Title
+      content: Content
+      feedback1: grammar errors
+      feedback2: sentence structure
+      feedback3: useful phrases
+    show:
+      text1: 🟦 is the day the diary was created
+      text2: 🟩 is today
+    edit:
+      button1: Back
+      button2: Update
+  alert:
+    logout: logged out
